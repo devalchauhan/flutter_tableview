@@ -31,12 +31,6 @@ class WrapRefreshDemoPageBody extends StatefulWidget {
 class _WrapRefreshDemoPageBodyState extends State<WrapRefreshDemoPageBody> {
   //key for flutter_easyrefresh
   //about flutter_easyrefresh : https://github.com/xuelongqy/flutter_easyrefresh
-  GlobalKey<EasyRefreshState> _easyRefreshKey =
-      new GlobalKey<EasyRefreshState>();
-  GlobalKey<RefreshHeaderState> _headerKey =
-      new GlobalKey<RefreshHeaderState>();
-  GlobalKey<RefreshFooterState> _footerKey =
-      new GlobalKey<RefreshFooterState>();
 
   //if dataSourceList data changed, must call setState(() {});
   List<List<String>> dataSourceList = [
@@ -110,26 +104,22 @@ class _WrapRefreshDemoPageBodyState extends State<WrapRefreshDemoPageBody> {
 
   double _cellHeight(BuildContext context, int section, int row) {
     List<String> sectionDataList = this.dataSourceList[section];
-    double cellHeight = screenWidth / this.widthHeightRatio;
+    double cellHeight = screenWidth! / this.widthHeightRatio;
     cellHeight = row != (sectionDataList.length - 1)
         ? cellHeight
         : cellHeight + this.extraPaddingBottom;
     return cellHeight;
   }
 
-  Widget _listViewFatherWidgetBuilder(BuildContext context, Widget listView) {
+  Widget _listViewFatherWidgetBuilder(BuildContext context, Widget? listView) {
     return EasyRefresh(
-      key: _easyRefreshKey,
-      limitScroll: true,
-      refreshHeader: MaterialHeader(key: _headerKey),
-      refreshFooter: MaterialFooter(key: _footerKey),
       onRefresh: () async {
         print('onrefresh');
         await Future.delayed(Duration(seconds: 2));
         this.dataSourceList = this.dataSourceList.reversed.toList();
         setState(() {});
       },
-      loadMore: () async {
+      onLoad: () async {
         print('loadMore');
         setState(() {});
       },

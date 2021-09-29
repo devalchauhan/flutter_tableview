@@ -32,14 +32,14 @@ class Home extends StatelessWidget {
           children: <Widget>[
             FlatButton(
               onPressed: () {
-                push(context, SimpleDemoPage());
+                push(context, SimpleDemoPage(), popCallBack: (value) {  }, routeName: '');
               },
               child: Text('simple demo'),
             ),
             FlatButton(
 
               onPressed: () {
-                push(context, WrapRefreshDemoPage());
+                push(context, WrapRefreshDemoPage(), popCallBack: (value) {  }, routeName: '');
 
               },
               child: Text('wrap refresh demo'),
